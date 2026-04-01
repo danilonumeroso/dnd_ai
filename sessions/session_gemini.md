@@ -1,22 +1,12 @@
 # D&D Agents Session
 
-*Started: 2026-04-01 11:22*
-
 ## The Adventuring Party
 
 - **Thalindra** — Wizard (halfelf) | HP 6/6 | AC 12  
-  *Curious. Logic. Good.*
-
-- **Seyrie** — Fighter (tiefling) | HP 10/10 | AC 18  
-  *Good. Brave. Altruist.*
-
-- **Alfinn** — Cleric (human) | HP 10/10 | AC 17  
-  *Impulsive. Sarcastic. Light-hearted.*
-
-- **Aerion** — Rogue (wood_elf) | HP 8/8 | AC 14  
-  *Enigmatic. Diffident. Selfish.*
-
----
+  - **Seyrie** — Fighter (tiefling) | HP 10/10 | AC 18  
+  - **Alfinn** — Cleric (human) | HP 10/10 | AC 17  
+  - **Aerion** — Rogue (wood_elf) | HP 8/8 | AC 14  
+  ---
 
 ## Turn 1
 
@@ -28,28 +18,20 @@ Aerion fails the wisdom check (rolled 8 vs DC 12). Search the surrounding fog fo
 
 ### Thalindra
 
-*Examine the mud and the point where the footprints end to find any logical or physical traces of where the travelers might have gone.*
-
 Examine the mud and the point where the footprints end to find any logical or physical traces of where the travelers might have gone.
 Rolled 23 vs DC 12: Success!
 
 ### Seyrie
-
-*Peer through the thick fog to look for any signs of the missing travelers' tracks or hidden movement that Aerion might have missed.*
 
 Peer through the thick fog to look for any signs of the missing travelers' tracks or hidden movement that Aerion might have missed.
 Rolled 2 vs DC 12: Failure.
 
 ### Alfinn
 
-*Searching the fog for signs of movement or threats since Aerion is apparently looking with his eyes shut.*
-
 Searching the fog for signs of movement or threats since Aerion is apparently looking with his eyes shut.
 Rolled 22 vs DC 12: Success!
 
 ### Aerion
-
-*I attempt to slip into the shadows cast by the gnarled roots and the thick fog, making myself as inconspicuous as possible. If something is out there, let it find the others first.*
 
 I attempt to slip into the shadows cast by the gnarled roots and the thick fog, making myself as inconspicuous as possible. If something is out there, let it find the others first.
 Rolled 6 vs DC 12: Failure.
@@ -76,21 +58,15 @@ The first goblin lunges out of the mist, swinging its scimitar at the distracted
 
 ### Thalindra
 
-*Seeing Aerion fall so swiftly, I quickly calculate the most efficient way to neutralize the immediate threat. I weave my fingers in a precise geometric pattern, chanting the words of power as three darts of glowing lavender energy spiral from my fingertips, seeking out the goblin that struck our companion.*
-
 Seeing Aerion fall so swiftly, I quickly calculate the most efficient way to neutralize the immediate threat. I weave my fingers in a precise geometric pattern, chanting the words of power as three darts of glowing lavender energy spiral from my fingertips, seeking out the goblin that struck our companion.
 Misses Goblin 1! (rolled 13 vs AC 15)
 
 ### Seyrie
 
-*Seyrie cries out in horror as Aerion falls. She draws her blade and steps forward to shield her fallen comrade, swinging a heavy blow at the goblin who struck him.*
-
 Seyrie cries out in horror as Aerion falls. She draws her blade and steps forward to shield her fallen comrade, swinging a heavy blow at the goblin who struck him.
 Misses Goblin 1! (rolled 5 vs AC 15)
 
 ### Alfinn
-
-*A blinding flash of golden light streaks from Alfinn's hand toward the goblin that just downed Aerion.*
 
 A blinding flash of golden light streaks from Alfinn's hand toward the goblin that just downed Aerion.
 Hits Goblin 1 for 12 damage! (Goblin 1: 0/7 HP)
