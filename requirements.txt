@@ -1,0 +1,5 @@
+
+anthropic
+pydantic
+rich
+google-genai
