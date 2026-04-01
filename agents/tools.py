@@ -38,25 +38,25 @@ PLAYER_TOOLS: list[dict[str, Any]] = [
             "required": ["target_name", "description"],
         },
     },
-    {
-        "name": "skill_check",
-        "description": "Attempt a skill check (e.g., perception, stealth, persuasion).",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "ability": {
-                    "type": "string",
-                    "enum": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
-                    "description": "The ability to use for this check.",
-                },
-                "description": {
-                    "type": "string",
-                    "description": "What you're trying to do.",
-                },
-            },
-            "required": ["ability", "description"],
-        },
-    },
+    # {
+    #     "name": "skill_check",
+    #     "description": "Attempt a skill check (e.g., perception, stealth, persuasion).",
+    #     "input_schema": {
+    #         "type": "object",
+    #         "properties": {
+    #             "ability": {
+    #                 "type": "string",
+    #                 "enum": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+    #                 "description": "The ability to use for this check.",
+    #             },
+    #             "description": {
+    #                 "type": "string",
+    #                 "description": "What you're trying to do.",
+    #             },
+    #         },
+    #         "required": ["ability", "description"],
+    #     },
+    # },
     {
         "name": "speak",
         "description": "Say something in-character to another character or NPC.",

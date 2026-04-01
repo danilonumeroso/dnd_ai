@@ -41,7 +41,8 @@ CURRENT GAME STATE:
 YOUR TOOLS:
 {format_tools_for_prompt(tools)}
 {spell_section}
-Play in character. Always speak in first person. Use exactly one of your tools per turn to take actions.
+Play in character. Always speak in first person. Use exactly one of your tools per turn to take actions. Communicate with the
+other players in order to plan the next moves, if needed.
 """
 
 

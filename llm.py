@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from typing import Any, Protocol
 
 import anthropic
+import openai
 from google import genai
 from google.genai import types as genai_types
 from google.genai import errors as genai_errors
@@ -193,6 +194,83 @@ class GeminiClient:
 
         return LLMResponse(
             text="\n".join(text_parts),
+            tool_calls=tool_calls,
+            raw=response,
+        )
+
+
+# ---------------------------------------------------------------------------
+# OpenRouter implementation
+# ---------------------------------------------------------------------------
+
+def _anthropic_tools_to_openai(tools: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Convert Anthropic-format tool definitions to OpenAI function calling format."""
+    return [
+        {
+            "type": "function",
+            "function": {
+                "name": tool["name"],
+                "description": tool.get("description", ""),
+                "parameters": tool.get("input_schema", {}),
+            },
+        }
+        for tool in tools
+    ]
+
+
+class OpenRouterClient:
+    """OpenRouter-backed LLM client (OpenAI-compatible API with tool use support)."""
+
+    def __init__(
+        self,
+        model: str = "qwen/qwen3.6-plus-preview:free",
+        api_key: str | None = None,
+        max_tokens: int = 1024,
+    ):
+        self.model = model
+        self.max_tokens = max_tokens
+        self.client = openai.AsyncOpenAI(
+            api_key=api_key or os.environ.get("OPENROUTER_API_KEY"),
+            base_url="https://openrouter.ai/api/v1",
+        )
+
+    async def generate(
+        self,
+        messages: list[dict[str, Any]],
+        system: str = "",
+        tools: list[dict[str, Any]] | None = None,
+    ) -> LLMResponse:
+        all_messages = []
+        if system:
+            all_messages.append({"role": "system", "content": system})
+        all_messages.extend(messages)
+
+        kwargs: dict[str, Any] = {
+            "model": self.model,
+            "max_tokens": self.max_tokens,
+            "messages": all_messages,
+        }
+        if tools:
+            kwargs["tools"] = _anthropic_tools_to_openai(tools)
+            kwargs["tool_choice"] = "auto"
+
+        response = await self.client.chat.completions.create(**kwargs)
+        message = response.choices[0].message
+
+        text = message.content or ""
+        tool_calls: list[dict[str, Any]] = []
+
+        if message.tool_calls:
+            import json
+            for call in message.tool_calls:
+                tool_calls.append({
+                    "id": call.id,
+                    "name": call.function.name,
+                    "input": json.loads(call.function.arguments),
+                })
+
+        return LLMResponse(
+            text=text,
             tool_calls=tool_calls,
             raw=response,
         )

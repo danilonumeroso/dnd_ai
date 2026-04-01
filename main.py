@@ -7,7 +7,7 @@ import asyncio
 
 from display import Display
 from game import Game
-from llm import AnthropicClient, GeminiClient
+from llm import AnthropicClient, GeminiClient, OpenRouterClient
 
 
 async def run_game(provider: str) -> None:
@@ -16,6 +16,8 @@ async def run_game(provider: str) -> None:
 
     if provider == "gemini":
         llm = GeminiClient()
+    elif provider == "openrouter":
+        llm = OpenRouterClient()
     else:
         llm = AnthropicClient()
 
@@ -28,7 +30,7 @@ async def run_game(provider: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="AI agents playing D&D")
     parser.add_argument(
-        "--provider", choices=["anthropic", "gemini"], default="gemini",
+        "--provider", choices=["anthropic", "gemini", "openrouter"], default="gemini",
         help="LLM provider to use (default: gemini)",
     )
     args = parser.parse_args()
