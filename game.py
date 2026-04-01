@@ -143,7 +143,7 @@ class Game:
                     for action in actions:
                         result = self.resolve_action(action)
                         self.display.show_action_result(character, action, result)
-                        self._log(f"### {character.name}\n\n*{action.description}*\n\n{result}")
+                        self._log(f"### {character.name}\n\n{result}")
 
                 # 3. Show state summary
                 self.display.show_state_summary(self.state)

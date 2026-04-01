@@ -69,5 +69,5 @@ Sessions are saved as markdown to the `sessions/` directory after each run. Chec
 - Some D&D 5e rules were simplified for code economy (e.g., no competence/mastery, no crits, no saving throws, modified spell mechanics and a lot more)
 - No local LLMs supported (but they're easy to add by implementing the LLMClient interface in llm.py)
 - Only four classes supported (i.e., fighter, wizard, rogue and cleric)
-- Only experimented with Gemini and OpenRouter since they're the only providers that offer a properly functioning free tier (and I'm tight we money :) )
+- Only experimented with Gemini and OpenRouter since they're the only providers that offer a properly functioning free tier (and I'm tight with money :) )
 
