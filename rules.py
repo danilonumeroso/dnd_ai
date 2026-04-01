@@ -42,10 +42,7 @@ def roll_d20(modifier: int = 0) -> DiceRoll:
 # ---------------------------------------------------------------------------
 
 def ability_check(character: Character, ability: AbilityName, dc: int) -> tuple[DiceRoll, bool]:
-    """Roll an ability check against a difficulty class.
-
-    TODO (you): add proficiency bonuses, expertise, etc.
-    """
+    """Roll an ability check against a difficulty class."""
     mod = character.abilities.modifier(ability)
     result = roll_d20(mod)
     return result, result.total >= dc
@@ -56,13 +53,7 @@ def ability_check(character: Character, ability: AbilityName, dc: int) -> tuple[
 # ---------------------------------------------------------------------------
 
 def attack_roll(attacker: Character, target: Character) -> tuple[DiceRoll, bool]:
-    """Roll to hit a target.
-
-    TODO (you):
-    - factor in weapon proficiency
-    - handle critical hits (natural 20) and misses (natural 1)
-    - different weapons / spell attacks
-    """
+    """Roll to hit a target."""
     ability = {
         "fighter": AbilityName.STR,
         "paladin": AbilityName.STR,
@@ -80,10 +71,7 @@ def attack_roll(attacker: Character, target: Character) -> tuple[DiceRoll, bool]
 
 
 def weapon_damage_roll(attacker: Character) -> DiceRoll:
-    """Roll damage after a successful hit.
-
-    TODO (you): weapon-based damage dice, spell damage, critical hits doubling dice.
-    """
+    """Roll damage after a successful hit."""
     damage_dice = {
         "fighter": "1d10",
         "rogue": "1d6",
@@ -107,9 +95,6 @@ def apply_damage(target: Character, damage: int) -> None:
 
 
 def roll_initiative(character: Character) -> DiceRoll:
-    """Roll initiative (d20 + DEX modifier).
-
-    TODO (you): handle ties, special features that modify initiative.
-    """
+    """Roll initiative (d20 + DEX modifier)."""
     mod = character.abilities.modifier(AbilityName.DEX)
     return roll_d20(mod)

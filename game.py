@@ -1,14 +1,3 @@
-"""Game loop — orchestrates DM and player agents turn by turn.
-
-TODO (you): this is where you wire everything together.
-The core loop is:
-  1. DM narrates / sets the scene
-  2. Each player takes a turn (reacting to the DM's narration)
-  3. Process all actions through the rules engine
-  4. Update game state
-  5. Repeat
-"""
-
 from __future__ import annotations
 
 from datetime import datetime
