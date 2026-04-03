@@ -31,21 +31,50 @@ This repo has some limitations
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # add your API key
 ```
 
-Set your API key in `.env`:
+Export your API key:
 ```
 ANTHROPIC_API_KEY=your-key-here
 # or
 GEMINI_API_KEY=your-key-here
+# or
+OPENROUTER_API_KEY=your-key-here
 ```
 
 ## Usage
 
 ```bash
-python main.py --provider <gemini|anthropic>
+python main.py --provider <gemini|anthropic|openrouter|huggingface>
 ```
+
+### Running local models via HuggingFace TGI
+
+You can run the code with a locally hosted model using [Text Generation Inference](https://github.com/huggingface/text-generation-inference). This requires Docker and an Nvidia GPU.
+
+**1. Start a TGI server**
+
+Mount a local directory so model weights are cached across restarts:
+
+```bash
+docker run --gpus all -p 8080:80 \
+  -v $HOME/.cache/huggingface:/data \
+  ghcr.io/huggingface/text-generation-inference \
+  --model-id Qwen/Qwen2.5-7B-Instruct --quantize eetq
+```
+
+Wait until you see `Connected` in the logs before proceeding. The first run will download the model weights (~15GB).
+
+**2. Run the code**
+
+```bash
+python main.py --provider huggingface
+```
+
+**Notes**
+- The `--quantize eetq` flag reduces VRAM usage enough to fit a 7B model on a 12GB GPU
+- Models with strong tool calling support work best (e.g. Qwen2.5, Llama-3.1); smaller or general-purpose models may struggle with structured tool use
+- To use a different model or a non-default endpoint, instantiate `HuggingFaceClient` directly with `model` and `base_url` parameters
 
 ## Party
 
@@ -67,7 +96,6 @@ Sessions are saved as markdown to the `sessions/` directory after each run. Chec
 ## Limitations
 
 - Some D&D 5e rules were simplified for code economy (e.g., no competence/mastery, no crits, no saving throws, modified spell mechanics and a lot more)
-- No local LLMs supported (but they're easy to add by implementing the LLMClient interface in llm.py)
 - Only four classes supported (i.e., fighter, wizard, rogue and cleric)
-- Only experimented with Gemini and OpenRouter since they're the only providers that offer a properly functioning free tier (and I'm tight with money :) )
+- Only experimented with free models: OpenRouter/Gemini/locally deployed ones (I'm tight with money :) )
 

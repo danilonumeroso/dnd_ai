@@ -10,6 +10,7 @@ import openai
 from google import genai
 from google.genai import types as genai_types
 from google.genai import errors as genai_errors
+from huggingface_hub import AsyncInferenceClient
 
 
 class QuotaExhaustedError(Exception):
@@ -262,6 +263,75 @@ class OpenRouterClient:
 
         if message.tool_calls:
             import json
+            for call in message.tool_calls:
+                tool_calls.append({
+                    "id": call.id,
+                    "name": call.function.name,
+                    "input": json.loads(call.function.arguments),
+                })
+
+        return LLMResponse(
+            text=text,
+            tool_calls=tool_calls,
+            raw=response,
+        )
+
+
+# ---------------------------------------------------------------------------
+# HuggingFace (local TGI / HF Inference API) implementation
+# ---------------------------------------------------------------------------
+
+class HuggingFaceClient:
+    """HuggingFace-backed LLM client via AsyncInferenceClient.
+
+    Works with:
+    - A local Text Generation Inference (TGI) server (default: http://localhost:8080)
+    - The HuggingFace Inference API (set api_key and omit base_url)
+    """
+
+    def __init__(
+        self,
+        model: str = "tgi",
+        base_url: str = "http://localhost:8080/v1",
+        api_key: str | None = None,
+        max_tokens: int = 1024,
+    ):
+        self.model = model
+        self.max_tokens = max_tokens
+        self.client = AsyncInferenceClient(
+            base_url=base_url,
+            api_key=api_key or os.environ.get("HF_API_KEY", "local"),
+        )
+
+    async def generate(
+        self,
+        messages: list[dict[str, Any]],
+        system: str = "",
+        tools: list[dict[str, Any]] | None = None,
+    ) -> LLMResponse:
+        import json
+
+        all_messages = []
+        if system:
+            all_messages.append({"role": "system", "content": system})
+        all_messages.extend(messages)
+
+        kwargs: dict[str, Any] = {
+            "model": self.model,
+            "max_tokens": self.max_tokens,
+            "messages": all_messages,
+        }
+        if tools:
+            kwargs["tools"] = _anthropic_tools_to_openai(tools)
+            kwargs["tool_choice"] = "auto"
+
+        response = await self.client.chat.completions.create(**kwargs)
+        message = response.choices[0].message
+
+        text = message.content or ""
+        tool_calls: list[dict[str, Any]] = []
+
+        if message.tool_calls:
             for call in message.tool_calls:
                 tool_calls.append({
                     "id": call.id,
